@@ -3,6 +3,10 @@
 onlyBuiltDependencies:
   - esbuild
 
+# esbuild's postinstall is optional for our use (vitest only needs the binary,
+# which esbuild ships). Keep the ignored-build notice from failing CI installs.
+strictDepBuilds: false
+
 # Do not re-run an implicit install before every `pnpm run` script: the
 # verification is noise in this single-package repo.
 verifyDepsBeforeRun: false
