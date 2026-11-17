@@ -29,7 +29,7 @@ DeepSeek Harness 插件：在**右侧栏**开一个面板，根据你当前会�
 
 ```bash
 cd ~/.dsh/profiles/<你的 profile>
-pnpm add github:<你的账号>/dsh-github-radar
+pnpm add github:nosleep00/dsh-github-radar
 ```
 
 **从源码装**（自己改代码时）：
@@ -113,3 +113,5 @@ docs/          执行方案、设计稿、执行进度
 
 GPL-3.0-only —— 见 [LICENSE](LICENSE)。仓库内 LICENSE 是 GNU GPL 第 3 版的完整原文，
 SPDX 标识符为 `GPL-3.0-only`。
+
+Copyright (C) 2026 dsh-github-radar contributors。

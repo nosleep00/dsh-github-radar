@@ -3,6 +3,14 @@
   "version": "0.1.0",
   "description": "GitHub 雷达 — 读取当前会话上下文，在右侧栏推荐相关开源项目，并给出一句话中文简介。",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nosleep00/dsh-github-radar.git"
+  },
+  "homepage": "https://github.com/nosleep00/dsh-github-radar#readme",
+  "bugs": {
+    "url": "https://github.com/nosleep00/dsh-github-radar/issues"
+  },
   "main": "./dist/host/index.js",
   "exports": {
     ".": "./dist/host/index.js",

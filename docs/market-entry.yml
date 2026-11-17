@@ -1,0 +1,10 @@
+# Copy this file to the awesome-dsh-plugin repository as
+#   data/plugins/nosleep00__dsh-github-radar.yml
+# and open one PR with that single file.
+url: https://github.com/nosleep00/dsh-github-radar
+name: nosleep00/dsh-github-radar
+category: ui
+icon: https://raw.githubusercontent.com/nosleep00/dsh-github-radar/main/assets/icon-180.png
+description:
+  en: 'A right-sidebar radar that turns the current session into five relevant GitHub repositories, each with a one-line Chinese summary, the reason it was picked and an install command; with no session signal yet it falls back to recently active trending projects, and ⟳ rotates to the next batch.'
+  zh: '右栏雷达：把当前会话变成五张 GitHub 项目卡片，每张都带一句中文摘要、推荐理由和安装命令；会话还没有线索时先给近期活跃的热门项目，点 ⟳ 还能换一批。'

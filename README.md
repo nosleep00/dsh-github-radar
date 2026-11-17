@@ -29,7 +29,7 @@ Looking for a library, hitting an error, or exploring an unfamiliar area usually
 
 ```bash
 cd ~/.dsh/profiles/<your profile>
-pnpm add github:<your-account>/dsh-github-radar
+pnpm add github:nosleep00/dsh-github-radar
 ```
 
 **From source** (for hacking):
@@ -111,3 +111,5 @@ docs/          plan, mockup, execution log
 
 GPL-3.0-only — see [LICENSE](LICENSE). The full text of the GNU General Public License
 version 3 is included verbatim; SPDX identifier: `GPL-3.0-only`.
+
+Copyright (C) 2026 dsh-github-radar contributors.
