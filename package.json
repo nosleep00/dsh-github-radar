@@ -16,6 +16,8 @@
     "cordis.patch.yml",
     "locale",
     "icon.svg",
+    "assets",
+    "screenshots.json",
     "README.md",
     "README.zh.md",
     "CHANGELOG.md",
@@ -34,7 +36,12 @@
         "@deepseek-ai/dsh-client-ui-sidebar-right"
       ]
     },
-    "manifestVersion": 1
+    "manifestVersion": 1,
+    "compatibility": {
+      "dshReleases": {
+        "0.2.2-rc.1+": "compatible"
+      }
+    }
   },
   "peerDependencies": {
     "@deepseek-ai/dsh-tools": ">=0.1.6-0",
@@ -78,5 +85,6 @@
   "license": "GPL-3.0-only",
   "author": {
     "name": "dsh-github-radar contributors"
-  }
+  },
+  "icon": "icon.svg"
 }

@@ -4,6 +4,13 @@ DeepSeek Harness 插件：在**右侧栏**开一个面板，根据你当前会�
 
 ![icon](icon.svg)
 
+![右栏里的 GitHub 雷达面板](assets/screenshot-panel.png)
+
+## 截图
+
+上面是面板本体；`assets/screenshot-start.png` 是它在开始页里的入口。两张图都在
+[`screenshots.json`](screenshots.json) 里按顺序声明，市场详情页会照这个顺序展示。
+
 ## 它解决什么
 
 遇到报错、想找一个现成的库、想知道某个领域有什么好项目——现在得自己切浏览器、想关键词、翻搜索页。

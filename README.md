@@ -4,6 +4,14 @@ A DeepSeek Harness plugin that opens a panel in the **right sidebar** and, based
 
 ![icon](icon.svg)
 
+![The GitHub Radar panel in the right sidebar](assets/screenshot-panel.png)
+
+## Screenshots
+
+The panel above, plus the entry it adds to the start page
+(`assets/screenshot-start.png`). Both are declared in [`screenshots.json`](screenshots.json) so
+storefronts show them in this order.
+
 ## Why
 
 Looking for a library, hitting an error, or exploring an unfamiliar area usually means: open a browser tab, invent keywords, scroll search results. The radar turns that into a glance — the five cards are already there while you keep chatting.
