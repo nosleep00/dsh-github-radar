@@ -1,0 +1,17 @@
+# dsh-github-radar bundle patch
+#
+# `dsh plugin --profile <name> add dsh-github-radar` reconciles
+# `dsh.profile.bundles` against installed packages and, seeing this
+# declaration, appends the bundle to the profile stack. The profile boot then
+# merges this layer: one `insert` of the plugin row.
+#
+# The row's `name` is the package specifier; the host half is that package's
+# main entry (a plain Cordis plugin). The `dsh.client` field in package.json
+# makes the web app load `./client` as the browser half.
+#
+# If the profile keeps a manual mount line for this plugin in its own
+# cordis.patch.yml, remove it before switching to the bundle channel to avoid
+# mounting the plugin twice.
+- insert:
+    - id: dsh-github-radar
+      name: dsh-github-radar

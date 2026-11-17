@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>GitHub 雷达 · 侧边栏面板示意图</title>
+<style>
+  :root{
+    --bg:#0f1115; --canvas:#e9ecf1; --panel:#ffffff; --line:#e4e7ec; --line2:#eef1f5;
+    --ink:#111827; --ink2:#4b5563; --ink3:#8a93a0; --brand:#2f6feb; --brand-soft:#eaf1ff;
+    --warn:#8a5b00; --warn-bg:#fff6e0; --warn-line:#f2d79b;
+    --ok:#0f7b3f; --ok-bg:#e8f7ee;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:34px 26px 46px; background:var(--canvas);
+    font:14px/1.55 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+    color:var(--ink); -webkit-font-smoothing:antialiased;
+  }
+  .page-title{max-width:940px;margin:0 auto 6px;font-size:17px;font-weight:650;letter-spacing:.2px}
+  .page-sub{max-width:940px;margin:0 auto 22px;color:#5b6472;font-size:13px}
+  .stage{display:flex;gap:26px;justify-content:center;align-items:flex-start;flex-wrap:wrap;max-width:1100px;margin:0 auto}
+  .col{display:flex;flex-direction:column;gap:10px;width:392px}
+  .col-label{font-size:12px;color:#5b6472;letter-spacing:.3px;padding-left:4px}
+
+  /* 面板外壳 */
+  .panel{
+    background:var(--panel);border:1px solid #dde2e9;border-radius:14px;overflow:hidden;
+    box-shadow:0 10px 28px rgba(16,24,40,.10),0 2px 6px rgba(16,24,40,.06);
+    display:flex;flex-direction:column;height:660px;
+  }
+  .p-head{display:flex;align-items:center;gap:8px;padding:11px 12px;border-bottom:1px solid var(--line2)}
+  .p-title{font-weight:650;font-size:13.5px;display:flex;align-items:center;gap:7px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--brand)}
+  .p-actions{margin-left:auto;display:flex;gap:4px}
+  .icon-btn{
+    width:26px;height:26px;border-radius:7px;border:1px solid transparent;background:transparent;
+    color:var(--ink2);display:grid;place-items:center;cursor:pointer;font-size:13px;
+  }
+  .icon-btn:hover{background:#f3f5f8;border-color:var(--line)}
+  .p-body{padding:10px 12px 4px;overflow:hidden;flex:1;display:flex;flex-direction:column;gap:9px}
+
+  /* 信号 chips */
+  .signals{background:#f7f9fc;border:1px solid var(--line2);border-radius:10px;padding:8px 9px}
+  .signals-top{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+  .signals-label{font-size:11px;color:var(--ink3);letter-spacing:.4px}
+  .link-mini{margin-left:auto;font-size:11px;color:var(--brand);cursor:pointer}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .chip{
+    font-size:11.5px;padding:3px 8px;border-radius:999px;background:#fff;border:1px solid var(--line);
+    color:var(--ink2);display:inline-flex;align-items:center;gap:5px;
+  }
+  .chip b{font-weight:600;color:var(--ink)}
+  .chip .x{color:var(--ink3);font-size:10px}
+
+  /* 卡片 */
+  .card{border:1px solid var(--line);border-radius:11px;padding:10px 11px 8px;background:#fff;transition:.15s}
+  .card:hover{border-color:#cfd7e3;box-shadow:0 4px 14px rgba(16,24,40,.06)}
+  .c-top{display:flex;align-items:flex-start;gap:8px}
+  .repo{font-weight:650;font-size:13px;letter-spacing:.1px;line-height:1.35}
+  .repo .owner{color:var(--ink3);font-weight:500}
+  .meta{display:flex;align-items:center;gap:9px;margin-top:3px;font-size:11.5px;color:var(--ink3)}
+  .lang{display:inline-flex;align-items:center;gap:5px}
+  .lang i{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .ai-badge{
+    margin-left:auto;font-size:9.5px;letter-spacing:.4px;color:#5a4bd8;background:#f0edff;
+    border:1px solid #ddd6ff;border-radius:5px;padding:1px 5px;flex:none;
+  }
+  .zh{margin-top:7px;font-size:12.8px;color:#1f2937;line-height:1.62}
+  .en{margin-top:3px;font-size:11.5px;color:var(--ink3);line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .why{
+    margin-top:7px;font-size:11.5px;color:#3f4a5a;background:#f7f9fc;border-left:2px solid #c9d8f5;
+    border-radius:0 7px 7px 0;padding:5px 8px;line-height:1.5;
+  }
+  .why b{color:#1e4fa3;font-weight:600}
+  .c-foot{display:flex;align-items:center;gap:12px;margin-top:7px;padding-top:6px;border-top:1px dashed var(--line2)}
+  .act{font-size:11.5px;color:var(--ink2);cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+  .act:hover{color:var(--brand)}
+  .act.ghost{margin-left:auto;color:var(--ink3)}
+
+  /* 底部 */
+  .p-foot{
+    border-top:1px solid var(--line2);padding:8px 12px;display:flex;align-items:center;gap:8px;
+    font-size:11.5px;color:var(--ink3);background:#fcfdfe;
+  }
+  .quota{display:inline-flex;align-items:center;gap:5px}
+  .bar{width:46px;height:4px;border-radius:3px;background:#e6eaf0;overflow:hidden}
+  .bar i{display:block;height:100%;width:62%;background:var(--ok)}
+  .p-foot .right{margin-left:auto;cursor:pointer;color:var(--ink2)}
+
+  /* 限速提示 */
+  .notice{
+    display:flex;gap:8px;align-items:flex-start;background:var(--warn-bg);border:1px solid var(--warn-line);
+    color:var(--warn);border-radius:10px;padding:8px 9px;font-size:11.5px;line-height:1.5;
+  }
+  .notice a{color:#8a5b00;text-decoration:underline;cursor:pointer}
+  .notice .btn{
+    flex:none;margin-left:auto;background:#fff;border:1px solid var(--warn-line);color:var(--warn);
+    border-radius:7px;padding:3px 8px;font-size:11px;cursor:pointer;white-space:nowrap;
+  }
+
+  /* 空态 */
+  .empty{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    color:var(--ink3);text-align:center;padding:0 26px;
+  }
+  .empty .ic{font-size:26px;opacity:.6}
+  .empty b{color:var(--ink2);font-size:12.5px;font-weight:600}
+  .empty span{font-size:11.5px;line-height:1.6}
+
+  /* 骨架 */
+  .sk{border:1px solid var(--line);border-radius:11px;padding:11px}
+  .sk i{display:block;height:9px;border-radius:5px;background:linear-gradient(90deg,#eef1f5,#f7f9fc,#eef1f5);background-size:200% 100%;animation:sh 1.3s infinite}
+  .sk .a{width:42%}.sk .b{width:92%;margin-top:9px}.sk .c{width:76%;margin-top:6px}.sk .d{width:56%;margin-top:6px}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-40% 0}}
+
+  .legend{margin:26px auto 0;max-width:1100px;color:#5b6472;font-size:12px;line-height:1.8}
+  .legend code{background:#fff;border:1px solid #dde2e9;border-radius:5px;padding:1px 5px;font-size:11px}
+</style>
+</head>
+<body>
+  <div class="page-title">GitHub 雷达 · 右栏面板示意</div>
+  <div class="page-sub">示意图，用于确认信息密度与中文简介的位置；数据为示例。宽度按 DSH 右栏单列排版（约 380px）。</div>
+
+  <div class="stage">
+    <!-- 正常态 -->
+    <div class="col">
+      <div class="col-label">① 正常态（默认直连，匿名额度）</div>
+      <div class="panel">
+        <div class="p-head">
+          <div class="p-title"><span class="dot"></span>GitHub 雷达</div>
+          <div class="p-actions">
+            <button class="icon-btn" title="换一批">⟳</button>
+            <button class="icon-btn" title="更多">⋯</button>
+            <button class="icon-btn" title="关闭">✕</button>
+          </div>
+        </div>
+
+        <div class="p-body">
+          <div class="signals">
+            <div class="signals-top">
+              <span class="signals-label">当前信号 · 从会话提取</span>
+              <span class="link-mini">编辑</span>
+            </div>
+            <div class="chips">
+              <span class="chip"><b>pydantic</b> 校验报错<span class="x">✕</span></span>
+              <span class="chip"><b>Rust</b> 命令行<span class="x">✕</span></span>
+              <span class="chip"><b>依赖安装太慢</b><span class="x">✕</span></span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="c-top">
+              <div>
+                <div class="repo"><span class="owner">astral-sh /</span> uv</div>
+                <div class="meta">
+                  <span class="lang"><i style="background:#dea584"></i>Rust</span>
+                  <span>★ 38.2k</span>
+                  <span>3 天前更新</span>
+                </div>
+              </div>
+              <span class="ai-badge">AI</span>
+            </div>
+            <div class="zh">极快的 Python 包管理器，兼容 pip 的安装方式，能明显缩短依赖安装与虚拟环境创建时间。</div>
+            <div class="en">An extremely fast Python package and project manager, written in Rust.</div>
+            <div class="why">因为你在会话里提到 <b>「pip install 很慢」</b></div>
+            <div class="c-foot">
+              <span class="act">↗ 打开</span>
+              <span class="act">⧉ 复制装法</span>
+              <span class="act ghost">不感兴趣</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="c-top">
+              <div>
+                <div class="repo"><span class="owner">pydantic /</span> pydantic</div>
+                <div class="meta">
+                  <span class="lang"><i style="background:#3572A5"></i>Python</span>
+                  <span>★ 21.6k</span>
+                  <span>1 天前更新</span>
+                </div>
+              </div>
+              <span class="ai-badge">AI</span>
+            </div>
+            <div class="zh">用类型标注做数据校验的库：请求体、配置文件、环境变量的格式检查都能自动完成。</div>
+            <div class="why">因为你遇到的报错是 <b>ValidationError</b>，这个库正是抛出它的位置</div>
+            <div class="c-foot">
+              <span class="act">↗ 打开</span>
+              <span class="act">⧉ 复制装法</span>
+              <span class="act ghost">不感兴趣</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="c-top">
+              <div>
+                <div class="repo"><span class="owner">BurntSushi /</span> ripgrep</div>
+                <div class="meta">
+                  <span class="lang"><i style="background:#dea584"></i>Rust</span>
+                  <span>★ 49.8k</span>
+                  <span>6 天前更新</span>
+                </div>
+              </div>
+              <span class="ai-badge">AI</span>
+            </div>
+            <div class="zh">命令行全文搜索工具，默认遵守 .gitignore，大仓库里找代码比 grep 快很多。</div>
+            <div class="why">因为你要在 <b>多个子目录里找一段配置</b></div>
+            <div class="c-foot">
+              <span class="act">↗ 打开</span>
+              <span class="act">⧉ 复制装法</span>
+              <span class="act ghost">不感兴趣</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-foot">
+          <span class="quota">匿名额度 <span class="bar"><i></i></span> 6/10 每分钟</span>
+          <span class="right">设置</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 限速 + 骨架 -->
+    <div class="col">
+      <div class="col-label">② 限速与加载态（token 引导出现在这里）</div>
+      <div class="panel">
+        <div class="p-head">
+          <div class="p-title"><span class="dot"></span>GitHub 雷达</div>
+          <div class="p-actions">
+            <button class="icon-btn">⟳</button>
+            <button class="icon-btn">⋯</button>
+            <button class="icon-btn">✕</button>
+          </div>
+        </div>
+
+        <div class="p-body">
+          <div class="notice">
+            <span>GitHub 暂时限速，40 秒后自动重试。<br>配一个只读令牌可提升到 30 次/分钟。</span>
+            <button class="btn">怎么配</button>
+          </div>
+
+          <div class="signals">
+            <div class="signals-top">
+              <span class="signals-label">当前信号 · 从会话提取</span>
+              <span class="link-mini">编辑</span>
+            </div>
+            <div class="chips">
+              <span class="chip"><b>Docker</b> 部署<span class="x">✕</span></span>
+              <span class="chip"><b>日志收集</b><span class="x">✕</span></span>
+            </div>
+          </div>
+
+          <div class="sk"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i></div>
+          <div class="sk"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i></div>
+
+          <div class="empty">
+            <div class="ic">◎</div>
+            <b>正在从 GitHub 找相关项目</b>
+            <span>首次刷新大约需要 2–4 秒；<br>之后会从本地缓存秒开。</span>
+          </div>
+        </div>
+
+        <div class="p-foot">
+          <span class="quota">已用 10/10 · 等待中</span>
+          <span class="right">设置</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 空态 -->
+    <div class="col">
+      <div class="col-label">③ 空态（刚打开会话，还没有信号）</div>
+      <div class="panel">
+        <div class="p-head">
+          <div class="p-title"><span class="dot"></span>GitHub 雷达</div>
+          <div class="p-actions">
+            <button class="icon-btn">⟳</button>
+            <button class="icon-btn">⋯</button>
+            <button class="icon-btn">✕</button>
+          </div>
+        </div>
+
+        <div class="p-body">
+          <div class="empty">
+            <div class="ic">⌖</div>
+            <b>还没有可用的上下文</b>
+            <span>聊几轮、或者直接告诉我你在做什么，<br>这里会自动出现相关的开源项目。</span>
+          </div>
+
+          <div class="signals">
+            <div class="signals-top">
+              <span class="signals-label">也可以手动指定</span>
+              <span class="link-mini">编辑</span>
+            </div>
+            <div class="chips">
+              <span class="chip">＋ 加关键词</span>
+              <span class="chip">＋ 粘贴报错</span>
+            </div>
+          </div>
+
+          <div class="why" style="border-left-color:#d8e4f8">
+            <b>小提示</b>：面板只会读取当前会话的文字摘要，不会上传你的代码或聊天记录。
+          </div>
+        </div>
+
+        <div class="p-foot">
+          <span class="quota">空闲</span>
+          <span class="right">设置</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    说明：卡片三段结构固定为 <code>名称 + 元信息</code> → <code>中文一句话</code> → <code>为什么推荐</code>；
+    「AI」角标表示这句中文由模型翻译生成，展开仍可看到英文原文。
+    限速提示只在真的触发限额时出现，平时不打扰。
+  </div>
+</body>
+</html>
